@@ -1,5 +1,7 @@
 package pl.javastart.library.model;
 
+import java.util.Objects;
+
 public class Book extends Publication{
 
    private String author;
@@ -37,12 +39,21 @@ public class Book extends Publication{
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-@Override
-    public void printInfo(){
-        String info = "Tytuł: " + getTitle() + "; Autor: " + author + "; Rok wydania: " + getYear() + "; Liczba stron: " + pages + "; Wydawnictwo: " + getPublisher();
-        if(isbn != null){
-            info = info + "; ISBN: " + isbn;
-        }
-        System.out.println(info);
+    @Override
+    public String toString() {
+        return super.toString() + "; " + author + "; " + pages + "; " + isbn;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book book)) return false;
+        if (!super.equals(o)) return false;
+        return getPages() == book.getPages() && Objects.equals(getAuthor(), book.getAuthor()) && Objects.equals(getIsbn(), book.getIsbn());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getAuthor(), getPages(), getIsbn());
     }
 }

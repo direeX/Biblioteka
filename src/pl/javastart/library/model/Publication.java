@@ -1,5 +1,7 @@
 package pl.javastart.library.model;
 
+import java.util.Objects;
+
 class Publication {
     private int year;
     private String title;
@@ -35,5 +37,20 @@ class Publication {
         this.publisher = publisher;
     }
 
-    public void printInfo(){}
+    @Override
+    public String toString() {
+        return title + "; " + publisher + "; " + year;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Publication that)) return false;
+        return getYear() == that.getYear() && Objects.equals(getTitle(), that.getTitle()) && Objects.equals(getPublisher(), that.getPublisher());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getYear(), getTitle(), getPublisher());
+    }
 }
